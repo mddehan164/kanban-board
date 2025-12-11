@@ -2,6 +2,64 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: var(--space-4) var(--space-12);
+  background-color: var(--color-primary-dark);
+}
+
+main {
+  padding: var(--space-6) var(--space-12);
+  flex-grow: 1;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav-items {
+  color: var(--color-bg-alt);
+  font-size: var(--font-md);
+  cursor: pointer;
+  background-color: var(--color-secondary-light);
+  color: var(--color-bg);
+}
+
+#board {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-5);
+  flex-grow: 1;
+}
+
+.board-child {
+  flex-grow: 1;
+  min-height: 80%;
+  border-radius: var(--radius-md);
   padding: var(--space-fluid-md);
-  background-color: var(--color-secondary);
+  background-color: var(--color-primary-dark);
+  color: var(--color-bg);
+  transition: all 0.7s ease;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background-color: var(--color-primary-light);
+  padding: var(--space-fluid-sm);
+  border-radius: var(--radius-sm);
+  cursor: grab;
+}
+.card button {
+  align-self: flex-end;
+}
+
+.card h3 {
+  font-size: var(--font-md);
+}
+.card p {
+  font-size: var(--font-sm);
+}
+.drag {
+  transform: scale(1.05);
+  border: 2px dashed var(--color-secondary-light);
 }

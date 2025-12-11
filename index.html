@@ -13,7 +13,34 @@
       <div class="logo">
         <h1>Kanban Board</h1>
       </div>
-      <div class="nav-items">Add task</div>
+      <div class="nav-items btn">Add task</div>
     </nav>
+    <main>
+      <div id="board">
+        <div id="tasks" class="board-child">
+          <div class="card" draggable="true">
+            <h2>Task name</h2>
+            <p>task description</p>
+            <button class="delete btn">Remove</button>
+          </div>
+        </div>
+        <div id="progress" class="board-child">
+          <div class="card" draggable="true">
+            <h2>Task name</h2>
+            <p>task description</p>
+            <button class="delete btn">Remove</button>
+          </div>
+        </div>
+        <div id="status" class="board-child">
+          <div class="card" draggable="true">
+            <h2>Task name</h2>
+            <p>task description</p>
+            <button class="delete btn">Remove</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="./script.js"></script>
   </body>
 </html>

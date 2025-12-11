@@ -2,13 +2,13 @@
   /* -----------------------------------
     COLOR SYSTEM
   ----------------------------------- */
-  --color-primary: #4f46e5;
-  --color-primary-light: #6366f1;
-  --color-primary-dark: #4338ca;
+  --color-primary: #4da674;
+  --color-primary-light: #c1e6ba;
+  --color-primary-dark: #023336;
 
-  --color-secondary: #14b8a6;
-  --color-secondary-light: #2dd4bf;
-  --color-secondary-dark: #0d9488;
+  --color-secondary: #4da693;
+  --color-secondary-light: #62c5b0;
+  --color-secondary-dark: rgb(19, 131, 121);
 
   --color-bg: #1b1b1b;
   --color-bg-alt: #f8fafc;
@@ -36,6 +36,8 @@
   --space-8: 32px;
   --space-9: 40px;
   --space-10: 48px;
+  --space-11: 96px;
+  --space-12: 192px;
 
   /* -----------------------------------
     RESPONSIVE FLUID SPACING
@@ -44,6 +46,7 @@
   --space-fluid-sm: clamp(4px, 1vw, 12px);
   --space-fluid-md: clamp(8px, 2vw, 24px);
   --space-fluid-lg: clamp(16px, 4vw, 48px);
+  --space-fluid-xl: clamp(32px, 8vw, 96px);
 
   /* -----------------------------------
     TYPOGRAPHY
