@@ -37,7 +37,10 @@ main {
   padding: var(--space-fluid-md);
   background-color: var(--color-primary-dark);
   color: var(--color-bg);
-  transition: all 0.7s ease;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
 }
 
 .card {
