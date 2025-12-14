@@ -11,6 +11,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
+  position: relative;
 }
 
 body {
@@ -23,13 +24,13 @@ body {
 
 .btn {
   padding: var(--space-2) var(--space-4);
-  background-color: var(--color-danger);
   color: var(--color-bg-alt);
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: var(--font-sm);
   transition: transform 0.1s ease;
+  font-weight: bold;
 }
 
 .btn:hover {
@@ -38,4 +39,23 @@ body {
 
 .btn:active {
   transform: scale(0.95);
+}
+.btn-success {
+  background-color: var(--color-success);
+}
+
+.btn-danger {
+  background-color: var(--color-danger);
+}
+
+.btn-warning {
+  background-color: var(--color-warning);
+}
+
+.btn-info {
+  background-color: var(--color-info);
+}
+
+.vanish {
+  display: none !important;
 }

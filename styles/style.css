@@ -66,3 +66,48 @@ main {
   transform: scale(1.05);
   border: 2px dashed var(--color-secondary-light);
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(65, 65, 65, 0.301);
+  backdrop-filter: blur(1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.show-modal {
+  display: flex;
+}
+
+.modal .modal-content {
+  background-color: var(--color-bg);
+  padding: var(--space-6);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  width: 300px;
+  opacity: 0.96;
+}
+
+.modal .modal-content input,
+textarea {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-sm);
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--font-sm);
+  padding: var(--space-1) var(--space-3);
+  color: var(--color-border);
+}

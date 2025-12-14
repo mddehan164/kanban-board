@@ -13,33 +13,43 @@
       <div class="logo">
         <h1>Kanban Board</h1>
       </div>
-      <div class="nav-items btn">Add task</div>
+      <div class="nav-items btn" id="add-task">Add task</div>
     </nav>
     <main>
       <div id="board">
         <div id="tasks" class="board-child">
-          <div class="card" draggable="true">
-            <h2>Task name</h2>
-            <p>task description</p>
-            <button class="delete btn">Remove</button>
+          <div class="info">
+            <h2>Task</h2>
+            <p>Count</p>
           </div>
         </div>
         <div id="progress" class="board-child">
-          <div class="card" draggable="true">
-            <h2>Task name</h2>
-            <p>task description</p>
-            <button class="delete btn">Remove</button>
+          <div class="info">
+            <h2>Progress</h2>
+            <p>Count</p>
           </div>
         </div>
         <div id="status" class="board-child">
-          <div class="card" draggable="true">
-            <h2>Task name</h2>
-            <p>task description</p>
-            <button class="delete btn">Remove</button>
+          <div class="info">
+            <h2>Finished</h2>
+            <p>Count</p>
           </div>
         </div>
       </div>
     </main>
+    <div id="modal" class="modal vanish">
+      <div class="modal-content">
+        <h2>Add New Task</h2>
+        <input type="text" placeholder="Task name" id="task-name" required />
+        <textarea
+          rows="1"
+          placeholder="Description"
+          id="task-des"
+          required
+        ></textarea>
+        <button class="btn btn-success" id="btn-task-add">Add Task</button>
+      </div>
+    </div>
 
     <script src="./script.js"></script>
   </body>
