@@ -1,5 +1,19 @@
 const boardChild = document.getElementById("board").children;
 let draggedElement = null;
+let tasks = [];
+// make local storage to store tasks
+const saveToLocalStorage = () => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+};
+
+// load from local storage
+const loadFromLocalStorage = () => {
+  const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+  if (storedTasks) {
+    tasks = storedTasks;
+  }
+};
+loadFromLocalStorage();
 
 // drag and drop event listeners
 const dragEvent = (element) => {
@@ -8,6 +22,7 @@ const dragEvent = (element) => {
     element.classList.remove("drag");
     // console.log(draggedElement, element);
     element.appendChild(draggedElement);
+    console.log(element);
   });
 
   element.addEventListener("dragover", (elem) => {
@@ -55,11 +70,24 @@ const taskAddBtn = document.getElementById("btn-task-add");
 taskAddBtn.addEventListener("click", () => {
   const taskName = document.getElementById("task-name").value;
   const taskDes = document.getElementById("task-des").value;
+  const task = {
+    name: taskName,
+    des: taskDes,
+    type: "tasks",
+  };
+  createTask(task);
 
+  // delete task functionality
+  // deleteCard();
+});
+
+// create task
+
+const createTask = (task) => {
   const newCard = document.createElement("div");
   newCard.classList.add("card");
   newCard.setAttribute("draggable", "true");
-  newCard.innerHTML = `<h2>${taskName}</h2> <p>${taskDes}</p> <button class="delete btn btn-danger">Remove</button>`;
+  newCard.innerHTML = `<h2>${task.name}</h2> <p>${task.des}</p> <button class="delete btn btn-danger ${task.type}" onclick = "deleteCard(this)">Remove</button>`;
 
   // adding drag and drop functionality to new card
   newCard.addEventListener("drag", (e) => {
@@ -67,34 +95,25 @@ taskAddBtn.addEventListener("click", () => {
   });
 
   // appending new card to todo column
-  if (taskName === "") {
+  if (task.name === "") {
     alert("Task cannot be empty");
   } else {
     boardChild[0].appendChild(newCard);
-
+    tasks.push(task);
+    console.log(tasks);
+    saveToLocalStorage();
     // clearing input fields
 
     document.getElementById("task-name").value = "";
     document.getElementById("task-des").value = "";
     modal.classList.toggle("vanish");
   }
-
-  // delete task functionality
-  deleteCard();
-});
+};
 
 // delete task functionality
-const deleteCard = () => {
-  const deleteBtn = document.getElementsByClassName("delete");
-
-  console.log(deleteBtn);
-
-  for (let i = 0; i < deleteBtn.length; i++) {
-    const btn = deleteBtn[i];
-    btn.addEventListener("click", (e) => {
-      btn.parentNode.remove();
-    });
-  }
+const deleteCard = (id) => {
+  console.log(id);
+  id.parentNode.remove();
 };
 
 // deleteCard();
