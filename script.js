@@ -1,9 +1,46 @@
 const boardChild = document.getElementById("board").children;
 let draggedElement = null;
 let tasks = [];
+const modal = document.getElementById("modal");
+const addBtn = document.getElementById("add-task");
 // make local storage to store tasks
-const saveToLocalStorage = () => {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+const saveToLocalStorage = (item) => {
+  localStorage.setItem("tasks", JSON.stringify(item));
+};
+
+// create task card
+const createTask = (task) => {
+  const newCard = document.createElement("div");
+  newCard.dataset.index = task.id;
+  newCard.classList.add("card");
+  newCard.setAttribute("draggable", "true");
+  newCard.innerHTML = `<h2 class="task-name">${task.name}</h2> <p>${task.des}</p> <button class="delete btn btn-danger" onclick = "deleteCard(this)">Remove</button>`;
+
+  // adding drag and drop functionality to new card
+  newCard.addEventListener("drag", (e) => {
+    draggedElement = e.target;
+  });
+
+  // appending new card to todo column
+
+  if (task.type === "tasks") {
+    boardChild[0].appendChild(newCard);
+  } else if (task.type === "progress") {
+    boardChild[1].appendChild(newCard);
+  } else if (task.type === "status") {
+    boardChild[2].appendChild(newCard);
+  }
+};
+
+// count logic
+
+const counter = (tasks) => {
+  const taskNum = tasks.filter((t) => t.type === "tasks");
+  const progressNum = tasks.filter((t) => t.type === "progress");
+  const statusNum = tasks.filter((t) => t.type === "status");
+  document.getElementById("task-count").innerText = taskNum.length;
+  document.getElementById("progress-count").innerText = progressNum.length;
+  document.getElementById("status-count").innerText = statusNum.length;
 };
 
 // load from local storage
@@ -11,18 +48,29 @@ const loadFromLocalStorage = () => {
   const storedTasks = JSON.parse(localStorage.getItem("tasks"));
   if (storedTasks) {
     tasks = storedTasks;
+    counter(tasks);
+
+    tasks.forEach((t) => {
+      createTask(t);
+    });
   }
 };
-loadFromLocalStorage();
 
-// drag and drop event listeners
+// drag and drop events
 const dragEvent = (element) => {
   element.addEventListener("drop", (elem) => {
     elem.preventDefault();
     element.classList.remove("drag");
-    // console.log(draggedElement, element);
+
     element.appendChild(draggedElement);
-    console.log(element);
+    const cardId = Number(draggedElement.dataset.index);
+    const task = tasks.find((t) => t.id === cardId);
+
+    if (task) {
+      task.type = element.id;
+      saveToLocalStorage(tasks);
+      counter(tasks);
+    }
   });
 
   element.addEventListener("dragover", (elem) => {
@@ -34,6 +82,10 @@ const dragEvent = (element) => {
   element.addEventListener("dragleave", () => {
     element.classList.remove("drag");
   });
+
+  element.addEventListener("drag", (e) => {
+    draggedElement = e.target;
+  });
 };
 
 // applying drag and drop event listeners to all columns
@@ -42,20 +94,10 @@ for (let i = 0; i < boardChild.length; i++) {
   dragEvent(element);
 }
 
-// getting all the cards
-const columns = document.querySelectorAll(".board-child");
-
-columns.forEach((col) => {
-  col.addEventListener("drag", (e) => {
-    draggedElement = e.target;
-  });
-});
-
 // modal functionality
-const modal = document.getElementById("modal");
-const addBtn = document.getElementById("add-task");
+
 addBtn.addEventListener("click", () => {
-  modal.classList.toggle("vanish");
+  modal.classList.remove("vanish");
 });
 
 modal.addEventListener("click", (e) => {
@@ -68,52 +110,43 @@ modal.addEventListener("click", (e) => {
 const taskAddBtn = document.getElementById("btn-task-add");
 
 taskAddBtn.addEventListener("click", () => {
-  const taskName = document.getElementById("task-name").value;
-  const taskDes = document.getElementById("task-des").value;
-  const task = {
-    name: taskName,
-    des: taskDes,
-    type: "tasks",
-  };
-  createTask(task);
+  let taskName = document.getElementById("task-name");
+  let taskDes = document.getElementById("task-des");
 
-  // delete task functionality
-  // deleteCard();
-});
-
-// create task
-
-const createTask = (task) => {
-  const newCard = document.createElement("div");
-  newCard.classList.add("card");
-  newCard.setAttribute("draggable", "true");
-  newCard.innerHTML = `<h2>${task.name}</h2> <p>${task.des}</p> <button class="delete btn btn-danger ${task.type}" onclick = "deleteCard(this)">Remove</button>`;
-
-  // adding drag and drop functionality to new card
-  newCard.addEventListener("drag", (e) => {
-    draggedElement = e.target;
-  });
-
-  // appending new card to todo column
-  if (task.name === "") {
+  if (taskName.value === "") {
     alert("Task cannot be empty");
   } else {
-    boardChild[0].appendChild(newCard);
+    const task = {
+      id: Date.now(),
+      name: taskName.value,
+      des: taskDes.value,
+      type: "tasks",
+    };
     tasks.push(task);
-    console.log(tasks);
-    saveToLocalStorage();
-    // clearing input fields
+    saveToLocalStorage(tasks);
+    createTask(task);
+    counter(tasks);
+    modal.classList.add("vanish");
 
-    document.getElementById("task-name").value = "";
-    document.getElementById("task-des").value = "";
-    modal.classList.toggle("vanish");
+    // clearing input fields
+    taskName.value = "";
+    taskDes.value = "";
   }
-};
+});
 
 // delete task functionality
-const deleteCard = (id) => {
-  console.log(id);
-  id.parentNode.remove();
+const deleteCard = (btn) => {
+  const card = btn.parentNode;
+  const cardId = Number(card.dataset.index);
+
+  // remove from tasks array
+  tasks = tasks.filter((t) => t.id !== cardId);
+  // update storage & UI
+  saveToLocalStorage(tasks);
+  counter(tasks);
+
+  // remove from DOM
+  card.remove();
 };
 
-// deleteCard();
+document.onload = loadFromLocalStorage();
